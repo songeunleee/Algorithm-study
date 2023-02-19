@@ -5,13 +5,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.*;
 
-//플로이드 워셜
+//플로이드 워셜로 풀이
 
 public class Main {
 
-	static ArrayList<Integer>[] A;
-	static int visited[];
-	static HashMap<Integer, Integer> map = new HashMap<>();
+	static int D[][];
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,59 +19,53 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 
-		A = new ArrayList[N + 1];
-		
+		D = new int[N + 1][N + 1];
+
 		for (int i = 1; i <= N; i++) {
-			A[i] = new ArrayList<>();
+			for (int j = 1; j <= N; j++) {
+
+				if (i == j)
+					D[i][j] = 0;
+				else
+					D[i][j] = 10000001;
+
+			}
 		}
+
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
 			int s = Integer.parseInt(st.nextToken());
 			int e = Integer.parseInt(st.nextToken());
-			A[s].add(e);
-			A[e].add(s);
-		}
-		int result[] = new int[N + 1];
-		int index[] = new int[N + 1];
-		for (int i = 1; i <= N; i++) {
-			visited = new int[N + 1];
-			BFS(i);
-			int sum = 0;
-			visited[i] = 0;
-			for (int j = 1; j <= N; j++) {
-				sum += visited[j];
-			
-			}
+			D[s][e] = 1;
+			D[e][s] = 1;
 
-			result[i] = sum;
-			index[i] = sum;
 		}
 
-		Arrays.sort(result);
-		int answer = N;
-		for (int i = 1; i <= N; i++) {
-			if (result[1] == index[i])
-				if (answer > i)
-					answer = i;
-		}
+		for (int k = 1; k <= N; k++) {
+			for (int i = 1; i <= N; i++) {
+				for (int j = 1; j <= N; j++) {
+					if (D[i][k] + D[k][j] < D[i][j]) {
+						D[i][j] = D[i][k] + D[k][j];
+					}
 
-		System.out.println(answer);
-
-	}
-
-	private static void BFS(int i) {
-		Queue<Integer> q = new LinkedList<Integer>();
-		q.add(i);
-
-		while (!q.isEmpty()) {
-			int now = q.poll();
-			for (int x : A[now]) {
-				if (visited[x] == 0) {
-					visited[x] = visited[now] + 1;
-					q.add(x);
 				}
 			}
 		}
+
+		int min = Integer.MAX_VALUE;
+		int answer = -1;
+		for (int i = 1; i <= N; i++) {
+			int temp = 0;
+			for (int j = 1; j <= N; j++) {
+				temp += D[i][j];
+			}
+			if (min > temp) {
+				min = temp;
+				answer = i;
+			}
+			
+		}
+		System.out.println(answer);
 
 	}
 
