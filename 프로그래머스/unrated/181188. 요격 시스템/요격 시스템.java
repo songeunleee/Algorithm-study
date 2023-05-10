@@ -10,8 +10,8 @@ class Solution {
             return o1[1]-o2[1];
         });
         
-        int end = targets[0][1];
-        answer++;
+        int end = -1;
+        
         
         for(int target[]:targets){
             if(target[0]>=end){
