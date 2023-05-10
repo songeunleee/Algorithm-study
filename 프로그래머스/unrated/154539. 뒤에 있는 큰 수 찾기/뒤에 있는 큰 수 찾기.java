@@ -3,22 +3,18 @@ class Solution {
     public int[] solution(int[] numbers) {
         int[] answer = new int[numbers.length];
         Stack<Integer> s = new Stack<>();
+     s.push(0);
         
-       for(int i=numbers.length-1;i>=0;i--){
-           while(!s.isEmpty()){
-              if(numbers[i]<s.peek()){
-                  answer[i] = s.peek();
-                  break;
-              }else{
-                  s.pop();
-              }
+        for(int i=1;i<numbers.length;i++){
+            while(!s.isEmpty() && numbers[s.peek()]<numbers[i]){
                
-           }
-           if(s.isEmpty()){
-               answer[i] =-1;
-           }
-           s.push(numbers[i]);
-       }
-        return answer;
+                answer[s.pop()] = numbers[i];
+            }
+            s.push(i);
+        }
+        while(!s.isEmpty()){
+            answer[s.pop()] = -1;
+        }
+     return answer;
     }
 }
