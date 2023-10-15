@@ -1,3 +1,5 @@
+//그리디 알고리즘 존나어렵네 먼아ㅣ렄ㄴ;ㄹ
+
 class Solution {
     public int solution(int n, int m, int[] section) {
         int answer = 0;
