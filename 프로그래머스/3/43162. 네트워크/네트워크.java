@@ -27,23 +27,12 @@ class Solution {
             }
         }
         
-        
-        for(int i =0;i<n;i++){
-            System.out.println(A[i]);
-        }
-        
         return count;
     }
     
     void DFS(int v){
-        if(visited[v]){
-            System.out.println(v);
-            return;
-        }
-        
         visited[v] = true;
         for(int i : A[v]){
-            //System.out.print( i + " ");
             if(!visited[i]){
                 DFS(i);
             }
